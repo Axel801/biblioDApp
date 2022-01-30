@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { NbMenuItem } from '@nebular/theme';
+import { MenuService } from 'src/app/services/menu/menu.service';
 
 @Component({
   selector: 'app-administration',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdministrationComponent implements OnInit {
 
-  constructor() { }
+  menuItems;
+  addBookForm;
+  constructor(private menuService: MenuService,
+    private formBuilder: FormBuilder) {
+    this.menuItems = menuService.items;
+    this.addBookForm = this.formBuilder.group({
+      title: '',
+      author: '',
+      photo: '',
+      synopsis: '',
+      isbn: ''
+    });
+  }
 
   ngOnInit(): void {
   }
 
+
+  submitAddBook(dataFields) {
+    console.log(dataFields);
+
+  }
 }

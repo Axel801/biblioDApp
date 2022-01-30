@@ -1,1 +1,29 @@
-<p>administration works!</p>
+<nb-layout>
+    <nb-layout-header class="header">
+        <strong>
+            BiblioDApp | Admin
+        </strong>
+
+    </nb-layout-header>
+    <nb-sidebar>
+        <nb-menu [items]="menuItems">
+        </nb-menu>
+    </nb-sidebar>
+    <nb-layout-column class="colored-column-basic">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <h3>Añadir libro</h3>
+                    <form [formGroup]="addBookForm" (ngSubmit)="submitAddBook(addBookForm.value)">
+                        <input type="text" formControlName="title" nbInput fullWidth shape="rectangle" placeholder="Título Libro">
+                        <input type="text" formControlName="author" nbInput fullWidth shape="rectangle" placeholder="Autor Libro">
+                        <input type="text" formControlName="isbn" nbInput fullWidth shape="rectangle" placeholder="ISBN Libro">
+                        <textarea type="text" formControlName="synopsis" nbInput fullWidth shape="rectangle" placeholder="Sinopsis Libro"></textarea>
+                        <input type="file" formControlName="photo" nbInput fullWidth shape="rectangle" placeholder="ISBN Libro">
+                        <button nbButton outline status="primary" ngSubmit>Añadir libro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nb-layout-column>
+</nb-layout>

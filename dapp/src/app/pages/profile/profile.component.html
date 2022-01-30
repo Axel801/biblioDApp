@@ -1,0 +1,18 @@
+<nb-layout>
+    <nb-layout-header class="header">
+        <strong>
+            BiblioDApp | MyProfile
+        </strong>
+    </nb-layout-header>
+    <nb-sidebar>
+        <nb-menu [items]="menuItems">
+        </nb-menu>
+    </nb-sidebar>
+    <nb-layout-column class="colored-column-basic">
+        <div class="row">
+            <div class="col-md-3" *ngFor="let book of books">
+                <app-card [book]="book" [action]="action"></app-card>
+            </div>
+        </div>
+    </nb-layout-column>
+</nb-layout>
