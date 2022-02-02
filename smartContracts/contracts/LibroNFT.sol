@@ -67,8 +67,8 @@ contract LibroNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         return true;
     }
 
-    function isLibrarian() public view returns (bool) {
-        return hasRole(LIBRARIAN, msg.sender);
+    function isLibrarian(address _address) public view returns (bool) {
+        return hasRole(LIBRARIAN, _address);
     }
 
     function revokeLibrarian(address oldLibrarian)
@@ -101,7 +101,7 @@ contract LibroNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
         _safeMint(marketplaceAddress, tokenId);
 
         Marketplace market = Marketplace(marketplaceAddress);
-        market.addBook(tokenId);
+        market.addBook(tokenId, msg.sender);
 
         attributes[tokenId] = Attr(title, author, photoURL, synopsis, ISBN);
         // _setTokenURI(tokenId, uri);
@@ -139,6 +139,9 @@ contract LibroNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
                         '"},',
                         '{"trait_type": "ISBN", "value": "',
                         attributes[tokenId].ISBN,
+                        '"},',
+                        '{"trait_type": "author", "value": "',
+                        attributes[tokenId].author,
                         '"}',
                         "]}"
                     )
@@ -179,6 +182,10 @@ contract LibroNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
             msg.sender == marketplaceAddress,
             "Solo puede haber transferencias dentro del marketplaceAddress"
         );
+        if (from != marketplaceAddress) {
+            super._setApprovalForAll(from, marketplaceAddress, true);
+        }
+
         super._safeTransfer(from, to, tokenId, _data);
     }
 
@@ -195,6 +202,13 @@ contract LibroNFT is ERC721, ERC721Enumerable, ERC721URIStorage, AccessControl {
             msg.sender == marketplaceAddress,
             "Solo puede haber transferencias dentro del marketplaceAddress"
         );
+        if (from != marketplaceAddress) {
+            super._setApprovalForAll(from, marketplaceAddress, true);
+        }
         super.transferFrom(from, to, tokenId);
+    }
+
+    function existTokenID(uint256 _tokenID) public view returns (bool) {
+        return super._exists(_tokenID);
     }
 }

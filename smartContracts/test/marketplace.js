@@ -56,23 +56,32 @@ contract("Marketplace", function (accounts) {
   it('Get LibroNFT by marketplace index books available', async () => {
     const libroMarketPlace = await marketplace.booksAvailable(0); // Indice del test anterior
     const tokenID = libroMarketPlace.tokenID.toNumber();
-    const libroURI = await libroNFT.tokenURI(tokenID);
-    const json = atob(libroURI.substring(29));// 29 = length of "data:application/json;base64,"
+    const encodeURI = await libroNFT.tokenURI(tokenID);
+    // Para que al decodificar añada correctamente las tildes
+    const json = decodeURIComponent(atob(encodeURI.substr(29)).split('').map((c) => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));// 29 = length of "data:application/json;base64,"
     const result = JSON.parse(json);
     assert(result.name == 'Titulo 1');
   });
 
+  it('Get Index by TokenID', async () => {
+    const index = await marketplace.getIndexByTokenID(0).then(r => r.toNumber());
+    assert(index == 0);
+  });
+
   it('Rent book in marketplace', async () => {
+    const tokenID = 0;
     const startBalance = await libroNFT.balanceOf(accounts[0]).then(r => r.toNumber());
-    await marketplace.rentBook(0, { from: accounts[0] }); //TokenID del libro del anterior test
+    await marketplace.rentBook(tokenID, { from: accounts[0] }); //TokenID del libro del anterior test
     const endBalance = await libroNFT.balanceOf(accounts[0]).then(r => r.toNumber());
     assert(startBalance + 1 == endBalance);
   });
 
   it('Return book to marketplace', async () => {
     const totalActive = await marketplace.getActiveBooksCount().then(r => r.toNumber());
-    const tokenId = await libroNFT.tokenOfOwnerByIndex(accounts[0], 0);
-    await marketplace.addBook(tokenId, { from: accounts[0] });
+    const tokenId = await libroNFT.tokenOfOwnerByIndex(accounts[0], 0); // El primer libro que encuentre que tenga el usuario.
+    await marketplace.returnBook(tokenId, { from: accounts[0] });
     const totalActiveEnd = await marketplace.getActiveBooksCount().then(r => r.toNumber());
     assert(totalActive + 1 == totalActiveEnd);
   });
