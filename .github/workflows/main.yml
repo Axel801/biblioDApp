@@ -21,6 +21,7 @@ jobs:
           ${{ runner.os }}-node-    
     - name: Build
       run: |
+        cd dapp/
         npm install
         npm run-script build --base-href=/
     - name: Deploy
