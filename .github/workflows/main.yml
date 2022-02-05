@@ -24,7 +24,7 @@ jobs:
         cd dapp/
         ls
         npm install
-        npm run-script deploy
+        npm run-script build
         cd ..
         pwd
     - name: Deploy
