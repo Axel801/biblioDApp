@@ -25,10 +25,11 @@ jobs:
         ls
         npm install
         npm run-script deploy
-        ls dist/
+        cd ..
+        pwd
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: dist/dapp
+        FOLDER: ../dist/dapp
