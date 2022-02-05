@@ -22,6 +22,7 @@ jobs:
     - name: Build
       run: |
         cd dapp/
+        ls
         npm install
         npm run-script deploy
     - name: Deploy
