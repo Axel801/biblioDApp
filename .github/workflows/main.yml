@@ -25,6 +25,7 @@ jobs:
         ls
         npm install
         npm run-script deploy
+        cd dist/
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
