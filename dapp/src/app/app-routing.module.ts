@@ -5,13 +5,15 @@ import { LibraryComponent } from './pages/library/library.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AuthGuard } from './guard/auth.guard';
+import { AdminGuard } from './guard/admin.guard';
 
 const routes: Routes = [
   // { path: '/', redirectTo: '', pathMatch: 'full' },
-  { path: '', component: LibraryComponent, pathMatch: 'full' },
-  { path: 'admin', component: AdministrationComponent },
+  { path: '', component: LibraryComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'admin', component: AdministrationComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

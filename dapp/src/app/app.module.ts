@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,8 @@ import { CardComponent } from './components/card/card.component';
 import { LibraryComponent } from './pages/library/library.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AuthGuard } from './guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbCardModule,
     NbInputModule
   ],
-  providers: [],
+  providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

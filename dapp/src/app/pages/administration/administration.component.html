@@ -14,12 +14,12 @@
             <div class="col-12">
                 <div class="card">
                     <h3>Añadir libro</h3>
-                    <form [formGroup]="addBookForm" (ngSubmit)="submitAddBook(addBookForm.value)">
+                    <form [formGroup]="addBookForm" (ngSubmit)="submitAddBook(addBookForm.value)" enctype="multipart/form-data">
                         <input type="text" formControlName="title" nbInput fullWidth shape="rectangle" placeholder="Título Libro">
                         <input type="text" formControlName="author" nbInput fullWidth shape="rectangle" placeholder="Autor Libro">
                         <input type="text" formControlName="isbn" nbInput fullWidth shape="rectangle" placeholder="ISBN Libro">
                         <textarea type="text" formControlName="synopsis" nbInput fullWidth shape="rectangle" placeholder="Sinopsis Libro"></textarea>
-                        <input type="file" formControlName="photo" nbInput fullWidth shape="rectangle" placeholder="ISBN Libro">
+                        <input type="file" (change)="getBufferFile($event)" nbInput fullWidth shape="rectangle" placeholder="ISBN Libro">
                         <button nbButton outline status="primary" ngSubmit>Añadir libro</button>
                     </form>
                 </div>
