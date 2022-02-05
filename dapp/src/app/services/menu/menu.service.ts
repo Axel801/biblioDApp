@@ -17,8 +17,8 @@ export class MenuService {
       {
         title: 'Alquilar',
         icon: 'book',
-        link: '',
-        url: '/',
+        link: '/',
+        // url: '/',
       },
       {
         title: 'Mios',
