@@ -32,4 +32,4 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: ../dapp/dist/dapp
+        FOLDER: dapp/dist/dapp
